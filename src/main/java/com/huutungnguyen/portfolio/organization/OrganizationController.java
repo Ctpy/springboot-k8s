@@ -10,17 +10,20 @@ import java.util.List;
 
 @RestController
 public class OrganizationController {
-    private List<Organization> organizations = new ArrayList<>();
+    private OrganizationService organizationService;
+
+    public OrganizationController(OrganizationService organizationService) {
+        this.organizationService = organizationService;
+    }
 
     @GetMapping("/organizations")
     public List<Organization> findAll() {
-        return organizations;
+        return organizationService.findAll();
     }
 
     @PostMapping("/organizations")
     public String createOrganization(@RequestBody Organization organization) {
-        organizations.add(organization);
-
+        organizationService.createOrganization(organization);
         return "Organization created successfully";
     }
 }
