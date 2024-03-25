@@ -4,9 +4,7 @@ import com.huutungnguyen.portfolio.organization.Organization;
 import com.huutungnguyen.portfolio.organization.OrganizationRepository;
 import com.huutungnguyen.portfolio.organization.OrganizationService;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
