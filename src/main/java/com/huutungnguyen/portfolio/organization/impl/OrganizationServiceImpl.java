@@ -1,59 +1,61 @@
 package com.huutungnguyen.portfolio.organization.impl;
 
 import com.huutungnguyen.portfolio.organization.Organization;
+import com.huutungnguyen.portfolio.organization.OrganizationRepository;
 import com.huutungnguyen.portfolio.organization.OrganizationService;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 
 @Service
 public class OrganizationServiceImpl implements OrganizationService {
-    private List<Organization> organizations = new ArrayList<>();
+    OrganizationRepository organizationRepository;
+
+    public OrganizationServiceImpl(OrganizationRepository organizationRepository) {
+        this.organizationRepository = organizationRepository;
+    }
+
     private int id;
 
     @Override
     public List<Organization> findAll() {
-        return organizations;
+        return organizationRepository.findAll();
     }
 
     @Override
     public void createOrganization(Organization organization) {
         organization.setId(id++);
-        organizations.add(organization);
+        organizationRepository.save(organization);
     }
 
     @Override
     public Organization getOrganizationById(int id) {
-        for (Organization organization : organizations) {
-            if (organization.getId() == id) {
-                return organization;
-            }
-        }
-        return null;
+        return organizationRepository.findById(id).orElse(null);
     }
 
     @Override
-    public Organization deleteOrganizationById(int id) {
-        for (int i = 0; i < organizations.size(); i++) {
-            if (organizations.get(i).getId() == id) {
-                return organizations.remove(i);
-            }
+    public boolean deleteOrganizationById(int id) {
+        try {
+            organizationRepository.deleteById(id);
+            return true;
+        } catch (Exception e) {
+            return false;
         }
-        return null;
     }
 
     @Override
     public boolean updateOrganization(int id, Organization organization) {
-        for (Organization curOrganization: organizations){
-            if (curOrganization.getId() == id){
-                curOrganization.setDescription(organization.getDescription());
-                curOrganization.setLocation(organization.getLocation());
-                curOrganization.setTitle(organization.getTitle());
-                return true;
-            }
+        Optional<Organization> organizationOptional = organizationRepository.findById(id);
+        if (organizationOptional.isPresent()) {
+            Organization curOrganization = organizationOptional.get();
+            curOrganization.setDescription(organization.getDescription());
+            curOrganization.setLocation(organization.getLocation());
+            curOrganization.setTitle(organization.getTitle());
+            return true;
         }
         return false;
     }

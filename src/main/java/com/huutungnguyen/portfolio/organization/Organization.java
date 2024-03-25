@@ -1,7 +1,11 @@
 package com.huutungnguyen.portfolio.organization;
 
-public class Organization {
+import jakarta.persistence.*;
 
+@Entity
+public class Organization {
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private int id;
     private String title;
     private String description;
@@ -12,6 +16,10 @@ public class Organization {
         this.title = title;
         this.description = description;
         this.location = location;
+    }
+
+    public Organization() {
+
     }
 
     public void setId(int id) {

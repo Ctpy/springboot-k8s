@@ -8,7 +8,7 @@ public interface OrganizationService {
 
     Organization getOrganizationById(int id);
 
-    Organization deleteOrganizationById(int id);
+    boolean deleteOrganizationById(int id);
 
     boolean updateOrganization(int id, Organization organization);
 }

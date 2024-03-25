@@ -38,8 +38,8 @@ public class OrganizationController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteOrganizationById(@PathVariable int id){
-        Organization organization = organizationService.deleteOrganizationById(id);
-        if (organization == null){
+        boolean found = organizationService.deleteOrganizationById(id);
+        if (!found){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>("Organization deleted", HttpStatus.OK);
