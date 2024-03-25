@@ -53,6 +53,7 @@ public class OrganizationServiceImpl implements OrganizationService {
             curOrganization.setDescription(organization.getDescription());
             curOrganization.setLocation(organization.getLocation());
             curOrganization.setTitle(organization.getTitle());
+            organizationRepository.save(curOrganization);
             return true;
         }
         return false;
